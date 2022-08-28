@@ -1,0 +1,138 @@
+[
+    {
+        "title": "Team Tools/Resources",
+        "disabled": false,
+        "links":
+        [
+            {
+                "title": "Client Engineering Homepage",
+                "imageURL": "img/drawing-tool.jpeg",
+                "destinationURL": "https://w3.ibm.com/w3publisher/client-engineering"
+            },
+            {
+                "title": "Seismic",
+                "imageURL": "img/seismic-logo.png",
+                "destinationURL": "https://ibm.seismic.com/"
+            },
+            {
+                "title": "Client Engagement Model",
+                "destinationURL": "assets/IBM Technology Engagement Method White Paper.PDF"
+            },
+            {
+                "title": "Financial Force",
+                "imageURL": "img/ff.png",
+                "destinationURL": "https://ibmsc.lightning.force.com/"
+            },
+            {
+                "title": "vPlanner",
+                "destinationURL": "https://vplanner.dal1a.cirrus.ibm.com/login"
+            },
+            {
+                "title": "IBM Presentation Templates",
+                "imageURL": "img/ibm-ppt.png",
+                "destinationURL": "https://www.ibm.com/brand/presentations/"
+            }
+        ]
+    },
+    {
+        "title": "Tech Zone",
+        "disabled": false,
+        "links": [
+            {
+                "title": "Tech Zone",
+                "imageURL": "img/tech-zone.png",
+                "destinationURL": "https://techzone.ibm.com/"
+            },
+            {
+                "title": "TZ Accelerator Toolkit",
+                "destinationURL": "https://pages.github.ibm.com/skol/accelerator-toolkit-guide/"
+            }
+        ]
+    },
+    {
+        "title": "Checkride",
+        "disabled": true,
+        "links":
+        [
+            {
+                "title": "Checkride Program",
+                "imageURL": "img/green-checkmark.png",
+                "destinationURL": "https://ibm.seismic.com/app?ContentId=03d6d42b-9c23-496b-b41b-db0a21778583#/doccenter/0ec5a1c7-860d-4ddf-af65-232af4290698/doc/%252Fdd4267d24a-5835-f31e-f8f4-4c7712b068b4%252Fdf12d37591-cea6-4874-bd38-3870ce7e080d%252Flfad3849e9-45e0-41ab-bc66-c53590b6a61e//?mode=view&anchorId=334448a9-c480-4063-9d2e-e5100bd36fe4"
+            },
+            {
+                "title": "Group 4 Box Folder",
+                "imageURL": "img/box-logo.png",
+                "destinationURL": "https://ibm.ent.box.com/folder/167034193056"
+            },
+            {
+                "title": "Team CP4D Instance",
+                "imageURL": "img/3-pages.svg",
+                "destinationURL": "https://dataplatform.cloud.ibm.com/home2?context=cpdaas"
+            }
+        ]
+    },
+    {
+        "title": "Onboarding",
+        "disabled": false,
+        "links":
+        [
+            {
+                "title": "FF PSA",
+                "destinationURL": "https://ibm.seismic.com/app?ContentId=f845ec10-5e30-4ee8-a7e9-223e90298b20#/doccenter/5477419a-9474-4c51-94af-b442e9169fab/doc/%252Fddf1dbfee9-0f74-8b63-0adf-9bc88689151d%252Fdf48a6d366-1efd-415a-ad51-7e53d37ae0f4%252Fdf3a06671b-59d5-4d9c-a7bf-7a48bc8c489a%252Flfe816d974-38dd-4682-beec-ff323ba3c8ae//?mode=view&anchorId=334448a9-c480-4063-9d2e-e5100bd36fe4"
+            }
+        ]
+    },
+    {
+        "title": "Util",
+        "disabled": false,
+        "links":
+        [
+            {
+                "title": "Red Hat Console",
+                "imageURL": "img/red-hat.jpg",
+                "destinationURL": "https://console.redhat.com/"
+            },
+            {
+                "title": "Flashlist",
+                "imageURL": "img/flashlist-logo.ico",
+                "destinationURL": "https://pages.github.ibm.com/blackops/flashlist/"
+            },
+            {
+                "title": "Cooltext",
+                "imageURL": "img/cooltext-logo.png",
+                "destinationURL": "https://cooltext.com/"
+            },
+            {
+                "title": "Tririga",
+                "imageURL": "img/tririga-logo.png",
+                "destinationURL": "https://gre.tririga.com/p/web/workplaceServices"
+            },
+            {
+                "title": "w3id Security Settings",
+                "imageURL": "img/w3id-security-logo.png",
+                "destinationURL": "https://login.w3.ibm.com/usc/settings/security"
+            },
+            {
+                "title": "SVG to Image",
+                "destinationURL": "https://jakearchibald.github.io/svgomg/"
+            }
+        ]
+    },
+    {
+        "title": "Learning",
+        "disabled": false,
+        "links":
+        [
+            {
+                "title": "Redhat Partner Training",
+                "imageURL": "img/redhat-training.svg",
+                "destinationURL": "https://sso.redhat.com/auth/realms/redhat-external/protocol/saml/clients/redhat?RelayState=%2FDashboard_page"
+            },
+            {
+                "title": "YourGuides",
+                "imageURL": "img/yg-logo.webp",
+                "destinationURL": "https://yourguides.dal1a.cirrus.ibm.com/"
+            }
+        ]
+    }
+]
