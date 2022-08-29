@@ -32,15 +32,12 @@
 		data()
 		{
 		    return {
-		        sections,
-
                 keyboardInputString: ""
             }
 		},
 
 		computed: {
-			filteredSections()
-			{
+			filteredSections() {
 			    const filteredSections = [];
 
 			    for (const section of this.sections)
@@ -71,8 +68,18 @@
 			    return filteredSections;
 			},
 
-			loneFilteredTileButton()
-			{
+			sections() {
+				let idCounter = 0;
+
+				for (const section of sections) {
+					for (const link of section.links) {
+						link._id = idCounter++;
+					}
+				}
+				return sections;
+			},
+
+			loneFilteredTileButton() {
                 if (this.filteredSections.length === 1 && this.filteredSections[0].links.length === 1)
                 {
                     return document.querySelector(`[tile-button-title='${this.filteredSections[0].links[0].title}']`);
