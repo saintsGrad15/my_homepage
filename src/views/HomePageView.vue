@@ -12,7 +12,9 @@
 							:tile-button-title="link.title"
 							:title="link.title"
 							:imageURL="link.imageURL"
-							:destinationURL="link.destinationURL">
+							:destinationURL="link.destinationURL"
+							:_id="link._id"
+							:tabSelectedId="tabSelectedId">
 				</TileButton>
 			</div>
 
@@ -29,35 +31,35 @@
         name: "HomePageView",
 		components: { TileButton },
 
-		data()
-		{
+		data() {
 		    return {
-                keyboardInputString: ""
+		        keyboardInputString: "",
+				tabSelectedId: null
             }
 		},
 
 		computed: {
+			isSearching() {
+				return this.keyboardInputString.length > 0;
+			},
+
 			filteredSections() {
 			    const filteredSections = [];
 
-			    for (const section of this.sections)
-				{
+			    for (const section of this.sections) {
 				    const links = [];
 
 				    if (section.disabled === true) { continue; }
 
-				    for (const link of section.links)
-					{
+				    for (const link of section.links) {
                         if (link.disabled === true) { continue; }
 
-					    if (link.title.toLowerCase().includes(this.keyboardInputString))
-						{
+					    if (link.title.toLowerCase().includes(this.keyboardInputString)) {
 						    links.push(link);
 						}
 					}
 
-				    if (links.length > 0)
-					{
+				    if (links.length > 0) {
 					    filteredSections.push({
 							...section,
 							links
@@ -66,6 +68,28 @@
                 }
 
 			    return filteredSections;
+			},
+
+			filteredLinks() {
+				const filteredLinks = [];
+
+				for (const filteredSection of this.filteredSections) {
+					for (const link of filteredSection.links) {
+						filteredLinks.push(link);
+					}
+				}
+
+				return filteredLinks;
+			},
+
+			filteredLinksIdMap() {
+				const filteredLinksIdMap = {};
+
+				for (const filteredLink of this.filteredLinks) {
+					filteredLinksIdMap[filteredLink._id] = filteredLink;
+				}
+
+				return filteredLinksIdMap;
 			},
 
 			sections() {
@@ -77,51 +101,126 @@
 					}
 				}
 				return sections;
+			}
+		},
+
+		watch: {
+			isSearching(value) {
+				if (value) {
+					if (this.tabSelectedId === null) {
+						this.tabSelectedId = this.filteredLinks[0]._id;
+					}
+				}
 			},
 
-			loneFilteredTileButton() {
-                if (this.filteredSections.length === 1 && this.filteredSections[0].links.length === 1)
-                {
-                    return document.querySelector(`[tile-button-title='${this.filteredSections[0].links[0].title}']`);
-                }
+			keyboardInputString(value) {
+				const filteredIds = Object.keys(this.filteredLinksIdMap);
+
+				if (this.tabSelectedId !== null && !filteredIds.includes(this.tabSelectedId.toString())) {
+					this.tabSelectedId = Number.parseInt(filteredIds.sort()[0]);
+				}
+			},
+
+			tabSelectedId(value) {
+				document.querySelector(`a.btn[_id='${value}']`).scrollIntoView();
 			}
 		},
 
 		methods: {
-            handleKeyboardInput(event)
-            {
-                const key = event.key;
+			handleKeyDown(event) {
+				if (event.key === "Tab") {
+					event.preventDefault();
+				}
+			},
+            handleKeyUp(event) {
+				const key = event.key;
 
-                if (key.length === 1)
-                {
-                    this.keyboardInputString += key.toLowerCase();
-                }
-                else
-                {
-                    switch (key)
-                    {
-                        case "Enter":
-                            if (this.loneFilteredTileButton !== undefined)
-							{
-							    this.loneFilteredTileButton.click();
+				switch (key) {
+					case "Enter":
+						if (this.tabSelectedId !== null) {
+							window.open(this.filteredLinksIdMap[this.tabSelectedId].destinationURL,
+							event.altKey ? "_blank" : "_self");
+						}
+						break;
+
+					case "Backspace":
+						this.keyboardInputString = this.keyboardInputString.slice(0, -1);
+						break;
+
+					case "Escape":
+					case "Clear":
+						if (this.keyboardInputString.length < 1) {
+							this.tabSelectedId = null;
+						}
+						else {
+							this.keyboardInputString = "";
+						}
+						break;
+
+					case "Tab":
+						if (event.shiftKey) {  // Tab backward
+							if (this.tabSelectedId === null) {
+								if (this.filteredLinks.length > 0) {
+									this.tabSelectedId = this.filteredLinks[this.filteredLinks.length - 1]._id;
+								}
 							}
-                            break;
+							else {
+								for (const [index, link] of this.filteredLinks.entries()) {
+									if (this.tabSelectedId === link._id) {
+										// The first element
+										if (index === 0) {
+											this.tabSelectedId = this.filteredLinks[this.filteredLinks.length - 1]._id;
+										}
+										else {
+											this.tabSelectedId = this.filteredLinks[index - 1]._id;
+										}
 
-                        case "Backspace":
-                            this.keyboardInputString = this.keyboardInputString.slice(0, -1);
-                            break;
+										break;
+									}
+								}
+							}
+						}
+						else {  // Tab forward
+							if (this.tabSelectedId === null) {
+								if (this.filteredLinks.length > 0) {
+									this.tabSelectedId = this.filteredLinks[0]._id;
+								}
+							}
+							else {
+								for (const [index, link] of this.filteredLinks.entries()) {
+									if (this.tabSelectedId === link._id) {
+										// The last element
+										if (index === this.filteredLinks.length - 1) {
+											this.tabSelectedId = this.filteredLinks[0]._id;
+										}
+										else {
+											this.tabSelectedId = this.filteredLinks[index + 1]._id;
+										}
 
-                        case "Escape":
-                        case "Clear":
-                            this.keyboardInputString = "";
-                            break;
-                    }
-                }
+										break;
+									}
+								}
+							}
+						}
+
+						break;
+					default:
+						if (key.length === 1) {
+							this.keyboardInputString += key.toLowerCase();
+						}
+						break;
+				}
             }
 		},
 
-		mounted() { document.addEventListener("keyup", this.handleKeyboardInput); },
-		unmounted() { document.removeEventListener("keyup", this.handleKeyboardInput); }
+		mounted() {
+			document.addEventListener("keydown", this.handleKeyDown);
+			document.addEventListener("keyup", this.handleKeyUp);
+		 },
+		unmounted() {
+			document.removeEventListener("keydown", this.handleKeyDown);
+			document.removeEventListener("keyup", this.handleKeyUp);
+		}
     }
 </script>
 

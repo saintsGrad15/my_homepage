@@ -1,9 +1,10 @@
 <template>
-	<a :href="destinationURL">
-		<button class="tileBtn btn btn-outline-dark">
-			<img class="buttonImage" v-if="imageURL !== undefined && imageURL.length > 0" :src="imageURL">
-			{{ title }}
-		</button>
+	<a class="btn btn-outline-dark"
+	   :href="destinationURL"
+	   :class="{'tabSelected': _id === tabSelectedId}"
+	   :_id=_id>
+		<img class="buttonImage" v-if="imageURL !== undefined && imageURL.length > 0" :src="imageURL">
+		{{ title }}
 	</a>
 </template>
 
@@ -11,13 +12,12 @@
     export default {
         name: "TileButton",
 
-		props: ["title", "imageURL", "destinationURL"]
+		props: ["title", "imageURL", "destinationURL", "_id", "tabSelectedId"],
     }
 </script>
 
 <style scoped>
-	button.tileBtn
-	{
+	a.btn {
 		width: 150px;
 		height: 150px;
 
@@ -28,8 +28,11 @@
 		align-items: center;
 	}
 
-	img.buttonImage
-	{
+	a.btn.tabSelected {
+		box-shadow: 0px 0px 5px 3px;
+	}
+
+	img.buttonImage {
 		max-width: 50px;
 		max-height: 50px;
 	}
