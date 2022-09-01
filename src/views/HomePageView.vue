@@ -1,8 +1,6 @@
 <template>
 	<div id="keyboardInputAuditioner">{{ keyboardInputString }}</div>
 
-	<h1 id="mainTitle" class="display-1">John's Homepage</h1>
-
 	<div id="sectionContainer">
 		<div v-for="(section, i) in filteredSections">
 			<h1>{{ section.title }}</h1>
@@ -122,7 +120,9 @@
 			},
 
 			tabSelectedId(value) {
-				document.querySelector(`a.btn[_id='${value}']`).scrollIntoView();
+				if (value !== null) {
+					document.querySelector(`a.btn[_id='${value}']`).scrollIntoView( {block: "center"} );
+				}
 			}
 		},
 
@@ -236,18 +236,6 @@
 		background-color: lightgray;
 
 		z-index: 1;
-	}
-
-	#mainTitle
-	{
-		padding: 40px 20px 0;
-
-		text-align: center;
-
-		position: sticky;
-		top: 0;
-
-		background-color: rgba(255, 255, 255, .90);
 	}
 
 	#sectionContainer
