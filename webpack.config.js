@@ -1,4 +1,4 @@
-const path = require('path');
+import path from path;
 
 module.exports = {
     module: {
@@ -8,5 +8,10 @@ module.exports = {
                 type: 'assets',
             }
         ]
+    },
+    resolve: {
+        alias: {
+            "@": path.resolve("__dirname", "src")
+        }
     }
 };
