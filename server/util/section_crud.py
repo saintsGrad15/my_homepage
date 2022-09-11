@@ -4,8 +4,17 @@ import json
 from typing import Dict, List
 from util import util
 
+_sections_json_path = os.path.join(util.CONFIG_DIRECTORY_PATH, "sections.json")
+
 def get_sections() -> List[Dict]:
-    with open(os.path.join(config_path, "sections.json")) as fp:
+    """
+    Return the "sections" document.
+
+    Returns:
+        List[Dict] -- The "sections" document.
+    """
+
+    with open(_sections_json_path) as fp:
         sections_json = json.load(fp)
 
     return sections_json
@@ -22,10 +31,7 @@ def add_section(section_json: Dict, index: int = None) -> None:
         index {int} -- The zero-based index at which to insert `section_json`. (default: {None})
     """
 
-    sections_json_path = os.path.join(util.CONFIG_DIRECTORY_PATH, "sections.json")
-
-    with open(sections_json_path) as fp:
-        sections_json: list = json.load(fp)
+    sections_json = get_sections()
 
     if index is None:
         index = len(sections_json)
