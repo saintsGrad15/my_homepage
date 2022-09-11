@@ -37,7 +37,10 @@ def add_section():
     validation_result = util.validate_section_schema(section)
 
     if validation_result is True:
-        section_crud.add_section(section_json=section, index=index)
+        try:
+            section_crud.add_section(section_json=section, index=index)
+        except Exception as e:
+            return str(e), 500, {}
 
         return "{}", 200, {}
     else:
@@ -45,3 +48,29 @@ def add_section():
 
 if __name__ == "__main__":
     app.run(host="localhost", port=config.PORT, debug=True)
+
+@app.route("/api/deletesection", methods=["POST"])
+def delete_section():
+    try:
+        request_json = request.json
+    except Exception as e:
+        logger.exception(e)
+
+        return str(e), 400, {}
+
+    index = request_json.get("index")
+
+    invalid_index_message = "Request json must contain an integer \"index\" key."
+
+    if index is None:
+        return invalid_index_message, 400, {}
+
+    if not isinstance(index, int):
+        return invalid_index_message, 400, {}
+
+    try:
+        section_crud.delete_section(index)
+    except ValueError as e:
+        return str(e), 400, {}
+    except Exception as e:
+        return str(e), 500, {}

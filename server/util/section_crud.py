@@ -19,6 +19,9 @@ def get_sections() -> List[Dict]:
 
     return sections_json
 
+def write_sections(sections_json: List[Dict]) -> None:
+    with open(_sections_json_path, mode="w") as fp:
+        json.dump(sections_json, fp, indent=4, sort_keys=True)
 
 def add_section(section_json: Dict, index: int = None) -> None:
     """
@@ -38,5 +41,26 @@ def add_section(section_json: Dict, index: int = None) -> None:
 
     sections_json.insert(index, section_json)
 
-    with open(sections_json_path, mode="w") as fp:
-        json.dump(sections_json, fp, indent=4, sort_keys=True)
+    write_sections(sections_json)
+
+
+def delete_section(index: int) -> None:
+    """
+    Delete zero-based `index` from the "sections" document.
+
+    Arguments:
+        index {int} -- The zero-based index to delete.
+
+    Raises:
+        ValueError: `index` is out of bounds.
+    """
+
+    sections_json = get_sections()
+
+    if index > len(sections_json) - 1:
+        raise ValueError(f"`index` is out of bounds for \"sections\" (length: ${len(sections_json)}"
+    )
+
+    del sections_json[index]
+
+    write_sections(sections_json)
