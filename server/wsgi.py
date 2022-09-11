@@ -2,6 +2,7 @@ import json
 import os
 import logging
 from util import util
+from util import section_crud
 
 from flask import Flask, request
 from flask_cors import CORS
@@ -14,12 +15,9 @@ logger = logging.getLogger(__name__)
 app = Flask(__name__)
 CORS(app)
 
-module_path = os.path.abspath(__file__)
-config_path = os.path.join(os.path.dirname(module_path), "config")
-
 @app.route("/api/sections", methods=["GET"])
 def get_sections():
-    with open(os.path.join(config_path, "sections.json")) as fp:
+    with open(os.path.join(util.CONFIG_DIRECTORY_PATH, "sections.json")) as fp:
         sections_json = json.load(fp)
 
         return json.dumps(sections_json), 200, {}
@@ -31,13 +29,15 @@ def add_section():
     except Exception as e:
         logger.exception(e)
 
+        return str(e), 400, {}
+
     section = request_json["section"]
     index = request_json.get("index")
 
     validation_result = util.validate_section_schema(section)
 
     if validation_result is True:
-        util.add_section(section_json=section, index=index)
+        section_crud.add_section(section_json=section, index=index)
 
         return "{}", 200, {}
     else:
