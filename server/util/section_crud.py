@@ -43,7 +43,6 @@ def add_section(section_json: Dict, index: int = None) -> None:
 
     write_sections(sections_json)
 
-
 def delete_section(index: int) -> None:
     """
     Delete zero-based `index` from the "sections" document.
