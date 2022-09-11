@@ -31,10 +31,14 @@ def add_section():
     except Exception as e:
         logger.exception(e)
 
-    validation_result = util.validate_section_schema(request_json["section"])
+    section = request_json["section"]
+    index = request_json.get("index")
+
+    validation_result = util.validate_section_schema(section)
 
     if validation_result is True:
-        # Continue...
+        util.add_section(section_json=section, index=index)
+
         return "{}", 200, {}
     else:
         return json.dumps(validation_result), 400, {}
