@@ -24,6 +24,16 @@ def setup_logging():
     logger.addHandler(handler)
 
 def validate_section_schema(section_json: Dict) -> Union[bool, Dict]:
+    """
+    Validate `section_json` against its JSON schema.
+
+    Arguments:
+        section_json {Dict} -- A "section" json, expected to be compliant with "/server/config/section_schema.json
+
+    Returns:
+        Union[bool, Dict] -- True if `section_json` validated against its schema, a JSON report of `section_json`'s errors otherwise.
+    """
+
     with open(os.path.join(_config_directory_path, "section_schema.json")) as fp:
         schema_json = json.load(fp)
 
