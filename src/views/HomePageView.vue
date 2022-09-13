@@ -127,7 +127,11 @@
 
 			tabSelectedId(value) {
 				if (value !== null) {
-					document.querySelector(`a.btn[_id='${value}']`).scrollIntoView( {block: "center"} );
+					const selectedElement = document.querySelector(`a.btn[_id='${value}']`);
+
+					if (selectedElement !== null) {
+						selectedElement.scrollIntoView( {block: "center"} );
+					}
 				}
 			}
 		},
