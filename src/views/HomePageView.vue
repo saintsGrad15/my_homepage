@@ -23,7 +23,9 @@
 
 <script>
     import TileButton from "@/components/TileButton.vue";
-    import sections from '@/assets/sections.json';
+
+	const siteProtocol = location.protocol;
+	const siteHostname = location.hostname;
 	
     export default {
         name: "HomePageView",
@@ -31,6 +33,8 @@
 
 		data() {
 		    return {
+				rawSections: null,
+
 		        keyboardInputString: "",
 				tabSelectedId: null
             }
@@ -91,14 +95,16 @@
 			},
 
 			sections() {
+				if (this.rawSections === null) { return []; }
+
 				let idCounter = 0;
 
-				for (const section of sections) {
+				for (const section of this.rawSections) {
 					for (const link of section.links) {
 						link._id = idCounter++;
 					}
 				}
-				return sections;
+				return this.rawSections;
 			}
 		},
 
@@ -210,7 +216,21 @@
 						}
 						break;
 				}
-            }
+            },
+
+			getSectionsConfig() {
+				fetch(`${siteProtocol}//${siteHostname}:9000/api/sections`)
+					.then( (response) => {
+						if (response.ok) {
+							response.json()
+								.then( (rawSections) => this.rawSections = rawSections )
+						}
+					})
+			}
+		},
+
+		created() {
+			this.getSectionsConfig();
 		},
 
 		mounted() {
