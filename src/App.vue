@@ -104,9 +104,6 @@ html { overflow-y: hidden; }
 
 .toggleEditButton
 {
-  /* grid-row: 1; */
-  /* grid-column: 2; */
-
   border-radius: 0;
 
   height: 100%;
@@ -123,7 +120,7 @@ html { overflow-y: hidden; }
   grid-row: 2;
   grid-column: 1 / -1;
 
-  margin-top: 0;
+  margin: 0;
 }
 
 #appContent
@@ -132,7 +129,7 @@ html { overflow-y: hidden; }
   overflow-y: scroll;
 
   padding-bottom: 40px;
-  padding: 0 40px 40px 40px;
+  padding: 16px 40px 40px 40px;
 }
 
 nav { padding: 30px; }
