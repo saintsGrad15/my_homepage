@@ -23,6 +23,7 @@
 
 <script>
     import TileButton from "@/components/TileButton.vue";
+	import store from '@/store';
 
 	const siteProtocol = location.protocol;
 	const siteHostname = location.hostname;
@@ -105,7 +106,9 @@
 					}
 				}
 				return this.rawSections;
-			}
+			},
+
+			editMode() { return store.state.editMode; }
 		},
 
 		watch: {
@@ -133,6 +136,10 @@
 						selectedElement.scrollIntoView( {block: "center"} );
 					}
 				}
+			},
+
+			editMode(value) {
+				this.tabSelectedId = null;
 			}
 		},
 
@@ -143,6 +150,8 @@
 				}
 			},
             handleKeyUp(event) {
+				if (this.editMode === true) { return; }
+
 				const key = event.key;
 
 				switch (key) {
